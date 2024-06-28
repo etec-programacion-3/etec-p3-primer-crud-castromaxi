@@ -6,6 +6,9 @@ import { config } from 'dotenv';
 const app = express();
 const port = 3000;
 
+/**
+ * 
+ */
 config();
 const filename = process.env.FILENAME
 console.log(filename)
@@ -14,6 +17,9 @@ const sequelize = new Sequelize({
     storage: filename
 });
 
+/**
+ * 
+ */
 class Book extends Model { }
 Book.init({
     autor: DataTypes.STRING,
@@ -24,24 +30,39 @@ Book.init({
 
 sequelize.sync();
 
+/**
+ * 
+ */
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+/**
+ * 
+ */
 app.get('/book', async (req, res) => {
     const book = await Book.findAll();
     res.json(book);
 });
 
+/**
+ * 
+ */
 app.get('/book/:id', async (req, res) => {
     const book = await Book.findByPk(req.params.id);
     res.json(book);
 });
 
+/**
+ * 
+ */
 app.post('/book', async (req, res) => {
     const book = await Book.create(req.body);
     res.json(book);
 });
 
+/**
+ * 
+ */
 app.put('/book/:id', async (req, res) => {
     const book = await Book.findByPk(req.params.id);
     if (book) {
@@ -52,6 +73,9 @@ app.put('/book/:id', async (req, res) => {
     }
 });
 
+/** 
+ * 
+*/
 app.delete('/book/:id', async (req, res) => {
     const user = await Book.findByPk(req.params.id);
     if (book) {
@@ -62,6 +86,9 @@ app.delete('/book/:id', async (req, res) => {
     }
 });
 
+/**
+ * 
+ */
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`)
 });
